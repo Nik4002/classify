@@ -12,31 +12,6 @@ mod tests {
     use rand::rngs::StdRng;
     use rand::prelude::*;
 
-    fn get_data() -> Vec<f64> {
-        return vec![
-            -0.773196217050617,
-            0.24842717545639237,
-            -0.6598113252414564,
-            0.6920640566349373,
-            -0.23518920803371415,
-            -0.5616678850149022,
-            -0.2816950877136631,
-            -0.9114944430563943,
-            -0.24893149862052785,
-            0.584049927279119,
-            0.7188483142673544,
-            0.4163443332288843,
-            0.28795174508987703,
-            1.0276695211320594,
-            -1.078385486977444,
-            0.8874191999016873,
-            0.23384176150735006,
-            -0.7151122736860034,
-            -0.3481593622218171,
-            2.845586320877743,
-        ];
-    }
-
     #[test]
     fn test_create_unique_val_mapping() {
         let mut unique_val_map: Vec<UniqueVal> = vec![];
@@ -70,15 +45,15 @@ mod tests {
 
     #[test]
     fn test_pick_rand_breaks() {
-        let num_bins = 5;
+        let num_bins = 3;
         let mut breaks: Vec<usize> = vec![0; num_bins - 1];
-        let data: Vec<f64> = get_data();
+        let data: Vec<f64> = vec![1.0, 2.0, 4.0, 5.0, 7.0, 8.0, 10.0, 11.0];
         let num_vals = data.len();
         let mut rng = StdRng::seed_from_u64(123456789);
         
         jenks::pick_rand_breaks(&mut breaks, &num_vals, &mut rng);
         
-        assert_eq!(breaks, vec![4, 5, 9, 16], "pick_rand_breaks not working!");
+        assert_eq!(breaks, vec![3, 7], "pick_rand_breaks not working!");
     }
 
     #[test]
