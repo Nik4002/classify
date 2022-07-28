@@ -1,6 +1,5 @@
 mod jenks;
 pub use jenks::{get_jenks_breaks, get_jenks_classification};
-// Add other functions that I want to be publicly accessible
 
 mod utilities;
 pub use utilities::breaks_to_classification;
