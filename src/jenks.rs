@@ -23,52 +23,52 @@ pub struct Classification {
     pub bins: Vec<Bin>
 }
 
-fn main() {
-    // let data: Vec<f64> = vec![1.0, 1.0, 2.0, 3.0, 4.0, 4.0, 4.0];
-    // let data: Vec<f64> = vec![4.0, 1.0, 4.0, 3.0, 4.0, 1.0, 2.0, 5.0, 6.0, 8.0];
-    // let mut undefined: Vec<bool> = vec![false, false, true, false, false, true, false];
+// fn main() {
+//     // let data: Vec<f64> = vec![1.0, 1.0, 2.0, 3.0, 4.0, 4.0, 4.0];
+//     // let data: Vec<f64> = vec![4.0, 1.0, 4.0, 3.0, 4.0, 1.0, 2.0, 5.0, 6.0, 8.0];
+//     // let mut undefined: Vec<bool> = vec![false, false, true, false, false, true, false];
     
-    // let data = vec![-0.773196217050617, 0.24842717545639237,
-    // -0.6598113252414564, 0.6920640566349373,
-    // -0.23518920803371415, -0.5616678850149022,
-    // -0.2816950877136631, -0.9114944430563943,
-    // -0.24893149862052785, 0.584049927279119,
-    // 0.7188483142673544, 0.4163443332288843,
-    // 0.28795174508987703, 1.0276695211320594,
-    // -1.078385486977444, 0.8874191999016873,
-    // 0.23384176150735006, -0.7151122736860034,
-    // -0.3481593622218171, 2.845586320877743]; // geojson sample data (col: numbers)
-    // let mut undefined: Vec<bool> = vec![false; data.len()];
+//     // let data = vec![-0.773196217050617, 0.24842717545639237,
+//     // -0.6598113252414564, 0.6920640566349373,
+//     // -0.23518920803371415, -0.5616678850149022,
+//     // -0.2816950877136631, -0.9114944430563943,
+//     // -0.24893149862052785, 0.584049927279119,
+//     // 0.7188483142673544, 0.4163443332288843,
+//     // 0.28795174508987703, 1.0276695211320594,
+//     // -1.078385486977444, 0.8874191999016873,
+//     // 0.23384176150735006, -0.7151122736860034,
+//     // -0.3481593622218171, 2.845586320877743]; // geojson sample data (col: numbers)
+//     // let mut undefined: Vec<bool> = vec![false; data.len()];
 
-    let data = vec![1.0, 2.0, 4.0, 5.0, 7.0, 8.0];
+//     let data = vec![1.0, 2.0, 4.0, 5.0, 7.0, 8.0];
 
-    // let mut rng = thread_rng();
-    // let data: Vec<f64> = Standard.sample_iter(&mut rng).take(10000).collect();
-    // let mut undefined: Vec<bool> = vec![false; data.len()];
+//     // let mut rng = thread_rng();
+//     // let data: Vec<f64> = Standard.sample_iter(&mut rng).take(10000).collect();
+//     // let mut undefined: Vec<bool> = vec![false; data.len()];
 
-    println!("Data points: {}", data.len());
+//     println!("Data points: {}", data.len());
     
-    // Starting timer
-    let start = Instant::now();
+//     // Starting timer
+//     let start = Instant::now();
 
-    // Jenks algorithm call
-    let num_bins: usize = 3;
+//     // Jenks algorithm call
+//     let num_bins: usize = 3;
 
-    // let breaks: Vec<f64> = get_jenks_breaks(&num_bins, &data, &mut undefined);
-    // // println!("Breaks: {}", num_bins);
+//     // let breaks: Vec<f64> = get_jenks_breaks(&num_bins, &data, &mut undefined);
+//     // // println!("Breaks: {}", num_bins);
 
-    // let output: Classification = breaks_to_classification(breaks, &mut data, &mut undefined);
-    let output: Classification = get_jenks_classification(&num_bins, &data);
+//     // let output: Classification = breaks_to_classification(breaks, &mut data, &mut undefined);
+//     let output: Classification = get_jenks_classification(&num_bins, &data);
 
-    for bin in output.bins {
-        println!("Start: {}, End: {}, Count: {}", bin.bin_start, bin.bin_end, bin.count);
-    }
+//     for bin in output.bins {
+//         println!("Start: {}, End: {}, Count: {}", bin.bin_start, bin.bin_end, bin.count);
+//     }
 
-    // End timer
-    let end = Instant::now();
-    let elapsed = end.checked_duration_since(start).unwrap();
-    println!("{:#?} elapsed", elapsed);
-}
+//     // End timer
+//     let end = Instant::now();
+//     let elapsed = end.checked_duration_since(start).unwrap();
+//     println!("{:#?} elapsed", elapsed);
+// }
 
 /// Returns a Classification object following the Jenks Natural Breaks algorithm given the desired number of categories and one-dimensional f64 data
 ///
@@ -80,13 +80,13 @@ fn main() {
 /// # Examples
 ///
 /// ```
-/// use classify::get_jenks_classification; // Note: make sure this is still the name of the crate later
-/// use classify::Classification;
+/// mod jenks;
+/// use crate::jenks::get_jenks_classification;
 /// 
 /// let data: Vec<f64> = vec![1.0, 2.0, 4.0, 5.0, 7.0, 8.0];
 /// let num_bins = 3;
 /// 
-/// let result: Classification = jenks(&num_bins, &mut data);
+/// let result: Classification = get_jenks_classification(&num_bins, &mut data);
 /// 
 /// for bin in result.bins {
 ///     println!("Start: {}, End: {}, Count: {}", bin.bin_start, bin.bin_end, bin.count); 
@@ -179,7 +179,7 @@ pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classific
 ///
 /// let result: Vec<f64> = get_jenks_breaks(&num_bins, &mut data);
 /// 
-/// println!("{:#}", result);
+/// println!("{:#?}", result);
 /// ```
 pub fn get_jenks_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
     let num_vals = data.len();
@@ -309,7 +309,7 @@ pub fn create_unique_val_mapping(unique_val_map: &mut Vec<UniqueVal>, vals: &Vec
 /// 
 /// pick_rand_breaks(&mut breaks, &num_vals, &mut rng);
 /// 
-/// println!("{:#}", breaks);
+/// println!("{:#?}", breaks);
 /// ```
 pub fn pick_rand_breaks(breaks: &mut Vec<usize>, num_vals: &usize, rng: &mut StdRng) {
     let num_breaks = breaks.len();
@@ -346,7 +346,7 @@ pub fn pick_rand_breaks(breaks: &mut Vec<usize>, num_vals: &usize, rng: &mut Std
 /// 
 /// unique_to_normal_breaks(&unique_val_breaks, &unique_val_map, &mut normal_breaks);
 /// 
-/// println!("{:#}", normal_breaks);
+/// println!("{:#?}", normal_breaks);
 /// ```
 pub fn unique_to_normal_breaks(u_val_breaks: &Vec<usize>, u_val_map: &Vec<UniqueVal>, normal_breaks: &mut Vec<usize>) {
     if normal_breaks.len() != u_val_breaks.len() {
