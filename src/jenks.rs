@@ -3,7 +3,9 @@ use rand::rngs::StdRng;
 
 use std::collections::HashSet;
 
-use crate::utilities::{breaks_to_classification, create_unique_val_mapping, unique_to_normal_breaks};
+use crate::utilities::{
+    breaks_to_classification, create_unique_val_mapping, unique_to_normal_breaks,
+};
 use crate::utilities::{Classification, UniqueVal};
 
 /// Returns a Classification object following the Jenks Natural Breaks algorithm given the desired number of categories and one-dimensional f64 data
@@ -12,30 +14,30 @@ use crate::utilities::{Classification, UniqueVal};
 ///
 /// * `num_bins` - A reference to an integer (u64) representing the desired number of bins
 /// * `data` - A reference to a vector of unsorted data points (f64) to generate breaks for
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// use classify::get_jenks_classification;
 /// use classify::{Classification, Bin};
 /// use rand::prelude::*;
-/// use rand::rngs::StdRng; 
-/// 
+/// use rand::rngs::StdRng;
+///
 /// let data: Vec<f64> = vec![1.0, 2.0, 4.0, 5.0, 7.0, 8.0];
 /// let num_bins = 3;
-/// 
+///
 /// let result: Classification = get_jenks_classification(&num_bins, &data);
 /// let expected: Classification = Classification {bins: vec![
 ///     Bin{bin_start: 1.0, bin_end: 4.0, count: 2},
 ///     Bin{bin_start: 4.0, bin_end: 7.0, count: 2},
 ///     Bin{bin_start: 7.0, bin_end: 8.0, count: 2}]
 /// };
-/// 
+///
 /// assert!(result == expected);
 /// ```
 pub fn get_jenks_classification(num_bins: &usize, data: &Vec<f64>) -> Classification {
-    let breaks: Vec<f64> = get_jenks_breaks(&num_bins, data);
-    return breaks_to_classification(&breaks, data);
+    let breaks: Vec<f64> = get_jenks_breaks(num_bins, data);
+    breaks_to_classification(&breaks, data)
 }
 
 /// Returns a vector of breaks generated through the Jenks Natural Breaks algorithm given the desired number of bins and a dataset
@@ -63,22 +65,22 @@ pub fn get_jenks_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
     let num_vals = data.len();
 
     let mut sorted_data: Vec<f64> = vec![];
-    for i in 0..num_vals {
-        sorted_data.push(data[i]);
+    for item in data.iter().take(num_vals) {
+        sorted_data.push(*item);
     }
-    sorted_data.sort_by(|a, b| a.partial_cmp(&b).unwrap());
+    sorted_data.sort_by(|a, b| a.partial_cmp(b).unwrap());
 
     let mut unique_val_map: Vec<UniqueVal> = vec![];
     create_unique_val_mapping(&mut unique_val_map, &sorted_data);
 
     let num_unique_vals = unique_val_map.len();
-    let true_num_bins = std::cmp::min(&num_unique_vals, &num_bins);
+    let true_num_bins = std::cmp::min(&num_unique_vals, num_bins);
 
     let gssd = calc_gssd(&sorted_data);
 
-    let mut rand_breaks: Vec<usize> = vec![0 as usize; true_num_bins - 1];
-    let mut best_breaks: Vec<usize> = vec![0 as usize; true_num_bins - 1];
-    let mut unique_rand_breaks: Vec<usize> = vec![0 as usize; true_num_bins - 1];
+    let mut rand_breaks: Vec<usize> = vec![0_usize; true_num_bins - 1];
+    let mut best_breaks: Vec<usize> = vec![0_usize; true_num_bins - 1];
+    let mut unique_rand_breaks: Vec<usize> = vec![0_usize; true_num_bins - 1];
 
     let mut max_gvf: f64 = 0.0;
 
@@ -100,9 +102,7 @@ pub fn get_jenks_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
         let new_gvf: f64 = calc_gvf(&rand_breaks, &sorted_data, &gssd);
         if new_gvf > max_gvf {
             max_gvf = new_gvf;
-            for i in 0..rand_breaks.len() {
-                best_breaks[i] = rand_breaks[i];
-            }
+            best_breaks[..rand_breaks.len()].copy_from_slice(&rand_breaks[..]);
         }
     }
 
@@ -113,7 +113,7 @@ pub fn get_jenks_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
     }
     println!("Breaks: {:#?}", nat_breaks);
 
-    return nat_breaks;
+    nat_breaks
 }
 
 /// Populates a vector with a set of breaks as unique random integers that are valid indices within the dataset given the number of data points and an RNG
@@ -134,10 +134,10 @@ pub fn pick_rand_breaks(breaks: &mut Vec<usize>, num_vals: &usize, rng: &mut Std
         set.insert(rng.gen_range(1..*num_vals));
     }
     let mut set_iter = set.iter();
-    for i in 0..set_iter.len() {
-        breaks[i] = *set_iter.next().unwrap();
+    for item in breaks.iter_mut().take(set_iter.len()) {
+        *item = *set_iter.next().unwrap();
     }
-    breaks.sort();
+    breaks.sort_unstable();
 }
 
 /// Calculates goodness of variance fit (GVF) for a particular set of breaks on a dataset
@@ -161,16 +161,16 @@ pub fn calc_gvf(breaks: &Vec<usize>, vals: &Vec<f64>, gssd: &f64) -> f64 {
 
         let mut mean: f64 = 0.0;
         let mut ssd: f64 = 0.0;
-        for j in lower..upper {
-            mean += vals[j]
+        for item in vals.iter().take(upper).skip(lower) {
+            mean += item;
         }
         mean /= (upper - lower) as f64;
-        for j in lower..upper {
-            ssd += (vals[j] - mean) * (vals[j] - mean)
+        for item in vals.iter().take(upper).skip(lower) {
+            ssd += (item - mean) * (item - mean)
         }
         tssd += ssd;
     }
-    return 1.0 - (tssd / gssd);
+    1.0 - (tssd / gssd)
 }
 
 /// Calculates global sum of squared deviations (GSSD) for a particular dataset
@@ -182,8 +182,8 @@ pub fn calc_gssd(data: &Vec<f64>) -> f64 {
     let num_vals = data.len();
     let mut mean = 0.0;
     let mut max_val: f64 = data[0];
-    for i in 0..num_vals {
-        let val = data[i];
+    for item in data.iter().take(num_vals) {
+        let val = *item;
         if val > max_val {
             max_val = val
         }
@@ -192,10 +192,10 @@ pub fn calc_gssd(data: &Vec<f64>) -> f64 {
     mean /= num_vals as f64;
 
     let mut gssd: f64 = 0.0;
-    for i in 0..num_vals {
-        let val = data[i];
+    for item in data.iter().take(num_vals) {
+        let val = *item;
         gssd += (val - mean) * (val - mean);
     }
 
-    return gssd;
+    gssd
 }
