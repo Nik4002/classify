@@ -17,7 +17,7 @@ impl PartialEq for Bin {
         let starts_eq: bool = self.bin_start == other.bin_start;
         let ends_eq: bool = self.bin_end == other.bin_end;
         let counts_eq: bool = self.count == other.count;
-        return starts_eq && ends_eq && counts_eq;
+        starts_eq && ends_eq && counts_eq
     }
 }
 
@@ -33,7 +33,7 @@ impl PartialEq for Classification {
                 return false;
             }
         }
-        return true;
+        true
     }
 }
 
@@ -43,28 +43,26 @@ impl PartialEq for Classification {
 ///
 /// * `unique_val_map` - A mutable reference to an empty vector of UniqueVals
 /// * `vals` - A reference to the data (sorted, ascending) to use in populating unique_val_map
-pub fn create_unique_val_mapping(unique_val_map: &mut Vec<UniqueVal>, vals: &Vec<f64>) {
+pub fn create_unique_val_mapping(unique_val_map: &mut Vec<UniqueVal>, vals: &[f64]) {
     unique_val_map.clear();
     let mut idx: i64 = -1;
 
-    for i in 0..vals.len() {
+    for (i, item) in vals.iter().enumerate() {
         if unique_val_map.is_empty() {
             idx += 1;
             unique_val_map.push(UniqueVal {
-                val: vals[i],
+                val: *item,
                 first: i,
                 last: i,
             });
-        } else {
-            if unique_val_map[idx as usize].val != vals[i] {
-                unique_val_map[idx as usize].last = i - 1;
-                idx += 1;
-                unique_val_map.push(UniqueVal {
-                    val: vals[i],
-                    first: i,
-                    last: i,
-                });
-            }
+        } else if unique_val_map[idx as usize].val != *item {
+            unique_val_map[idx as usize].last = i - 1;
+            idx += 1;
+            unique_val_map.push(UniqueVal {
+                val: *item,
+                first: i,
+                last: i,
+            });
         }
     }
 }
@@ -78,7 +76,7 @@ pub fn create_unique_val_mapping(unique_val_map: &mut Vec<UniqueVal>, vals: &Vec
 /// * `normal_breaks` - A mutable reference to an empty vector to populate with adjusted break indices
 pub fn unique_to_normal_breaks(
     u_val_breaks: &Vec<usize>,
-    u_val_map: &Vec<UniqueVal>,
+    u_val_map: &[UniqueVal],
     normal_breaks: &mut Vec<usize>,
 ) {
     if normal_breaks.len() != u_val_breaks.len() {
@@ -111,7 +109,7 @@ pub fn unique_to_normal_breaks(
 ///     Bin{bin_start: 2.0, bin_end: 5.0, count: 2},
 ///     Bin{bin_start: 5.0, bin_end: 8.0, count: 3}]
 /// };
-/// 
+///
 /// assert!(result == expected);
 /// ```
 pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classification {
@@ -142,16 +140,14 @@ pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classific
     }
 
     let num_bins = results.len();
-    for i in 0..num_bins {
-        for j in 0..data.len() {
-            let mut bin = &mut results[i];
-            let n = data[j];
-            if bin.bin_start <= n && n < bin.bin_end {
+    for bin in results.iter_mut().take(num_bins) {
+        for item in data {
+            if &bin.bin_start <= item && item < &bin.bin_end {
                 bin.count += 1;
             }
         }
     }
     results[num_bins - 1].count += 1;
 
-    return Classification { bins: results };
+    Classification { bins: results }
 }
