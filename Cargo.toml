@@ -4,10 +4,12 @@ version = "0.1.0"
 authors = ["Nikhil Patel <pateln4002@gmail.com>"]
 edition = "2021"
 rust-version = "1.61"
-description = "A collection of algorithms for classifying 1D data into categories"
+description = "A collection of algorithms for categorizing 1D data"
 readme = "README.md"
 repository = "https://github.com/Nik4002/classify.git"
 
+[lib]
+path = "src/lib.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
