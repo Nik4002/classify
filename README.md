@@ -9,3 +9,4 @@ Implemented as of version 0.1.2:
 Expected future features:
  * Functions: Heads-Tails, Equal Interval, and more
  * Function to determine the bin in a Classification to which a particular data point belongs
+ * Generalize data input types to include all float or numeric types, not just f64
