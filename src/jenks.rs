@@ -13,7 +13,7 @@ use crate::utilities::{Classification, UniqueVal};
 ///
 /// # Arguments
 ///
-/// * `num_bins` - A reference to an integer (u64) representing the desired number of bins
+/// * `num_bins` - An integer (usize) representing the desired number of bins
 /// * `data` - A reference to a vector of unsorted data points (f64) to generate breaks for
 ///
 /// # Examples
@@ -27,7 +27,7 @@ use crate::utilities::{Classification, UniqueVal};
 /// let data: Vec<f64> = vec![1.0, 2.0, 4.0, 5.0, 7.0, 8.0];
 /// let num_bins = 3;
 ///
-/// let result: Classification = get_jenks_classification(&num_bins, &data);
+/// let result: Classification = get_jenks_classification(num_bins, &data);
 /// let expected: Classification = Classification {bins: vec![
 ///     Bin{bin_start: 1.0, bin_end: 4.0, count: 2},
 ///     Bin{bin_start: 4.0, bin_end: 7.0, count: 2},
@@ -36,7 +36,7 @@ use crate::utilities::{Classification, UniqueVal};
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_jenks_classification(num_bins: &usize, data: &Vec<f64>) -> Classification {
+pub fn get_jenks_classification(num_bins: usize, data: &Vec<f64>) -> Classification {
     let breaks: Vec<f64> = get_jenks_breaks(num_bins, data);
     breaks_to_classification(&breaks, data)
 }
@@ -59,11 +59,11 @@ pub fn get_jenks_classification(num_bins: &usize, data: &Vec<f64>) -> Classifica
 /// let data: Vec<f64> = vec![1.0, 2.0, 4.0, 5.0, 7.0, 8.0];
 /// let num_bins = 3;
 ///
-/// let result: Vec<f64> = get_jenks_breaks(&num_bins, &data);
+/// let result: Vec<f64> = get_jenks_breaks(num_bins, &data);
 ///
 /// assert_eq!(result, vec![4.0, 7.0]);
 /// ```
-pub fn get_jenks_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
+pub fn get_jenks_breaks(num_bins: usize, data: &Vec<f64>) -> Vec<f64> {
     let num_vals = data.len();
 
     let mut sorted_data: Vec<f64> = vec![];
@@ -76,7 +76,7 @@ pub fn get_jenks_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
     create_unique_val_mapping(&mut unique_val_map, &sorted_data);
 
     let num_unique_vals = unique_val_map.len();
-    let true_num_bins = std::cmp::min(&num_unique_vals, num_bins);
+    let true_num_bins = std::cmp::min(num_unique_vals, num_bins);
 
     let gssd = calc_gssd(&sorted_data);
 

@@ -6,7 +6,7 @@ use crate::utilities::Classification;
 /// 
 /// # Arguments
 ///
-/// * `num_bins` - A reference to an integer (u64) representing the desired number of bins
+/// * `num_bins` - An integer (usize) representing the desired number of bins
 /// * `data` - A reference to a vector of unsorted data points (f64) to generate breaks for
 ///
 /// # Examples
@@ -18,7 +18,7 @@ use crate::utilities::Classification;
 /// let data: Vec<f64> = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0];
 /// let num_bins = 3;
 ///
-/// let result: Classification = get_quantile_classification(&num_bins, &data);
+/// let result: Classification = get_quantile_classification(num_bins, &data);
 /// let expected: Classification = Classification {bins: vec![
 ///     Bin{bin_start: 1.0, bin_end: 3.5, count: 3},
 ///     Bin{bin_start: 3.5, bin_end: 6.5, count: 3},
@@ -27,7 +27,7 @@ use crate::utilities::Classification;
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_quantile_classification(num_bins: &usize, data: &Vec<f64>) -> Classification {
+pub fn get_quantile_classification(num_bins: usize, data: &Vec<f64>) -> Classification {
     let breaks: Vec<f64> = get_quantile_breaks(num_bins, data);
     breaks_to_classification(&breaks, data)
 }
@@ -48,12 +48,12 @@ pub fn get_quantile_classification(num_bins: &usize, data: &Vec<f64>) -> Classif
 /// let data: Vec<f64> = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0];
 /// let num_bins = 3;
 ///
-/// let result: Vec<f64> = get_quantile_breaks(&num_bins, &data);
+/// let result: Vec<f64> = get_quantile_breaks(num_bins, &data);
 ///
 /// assert_eq!(result, vec![3.5, 6.5]);
 /// ```
-pub fn get_quantile_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
-    if *num_bins == 0 || *num_bins == 1 {
+pub fn get_quantile_breaks(num_bins: usize, data: &Vec<f64>) -> Vec<f64> {
+    if num_bins == 0 || num_bins == 1 {
         let result: Vec<f64> = vec![];
         return result;
     }
@@ -67,7 +67,7 @@ pub fn get_quantile_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
     sorted_data.sort_by(|a, b| a.partial_cmp(b).unwrap());
     println!("{:#?}", sorted_data);
 
-    let true_num_bins = *std::cmp::min(&num_vals, num_bins);
+    let true_num_bins = std::cmp::min(num_vals, num_bins);
 
     let mut breaks: Vec<f64> = vec![];
 
