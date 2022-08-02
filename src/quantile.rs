@@ -57,7 +57,7 @@ pub fn get_quantile_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
     }
 
     let num_vals = data.len();
-    
+
     let mut unique_data: Vec<f64> = vec![];
     for item in data.iter().take(num_vals) {
         unique_data.push(*item);
@@ -71,7 +71,7 @@ pub fn get_quantile_breaks(num_bins: &usize, data: &Vec<f64>) -> Vec<f64> {
     let mut breaks: Vec<f64> = vec![];
 
     for i in 1..true_num_bins {
-        breaks.push(unique_data[((i*num_unique_vals) as f64/(true_num_bins) as f64) as usize]);
+        breaks.push(unique_data[((i * num_unique_vals) as f64 / (true_num_bins) as f64) as usize]);
     }
 
     breaks
