@@ -1,6 +1,9 @@
 mod jenks;
 pub use jenks::{get_jenks_breaks, get_jenks_classification};
 
+mod quantile;
+pub use quantile::{get_quantile_breaks, get_quantile_classification};
+
 mod utilities;
 pub use utilities::breaks_to_classification;
 pub use utilities::{Bin, Classification, UniqueVal};
