@@ -1,6 +1,6 @@
 [package]
 name = "classify"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Nikhil Patel <pateln4002@gmail.com>"]
 edition = "2021"
 rust-version = "1.61"
@@ -8,6 +8,7 @@ description = "A collection of algorithms for categorizing 1D data"
 readme = "README.md"
 repository = "https://github.com/Nik4002/classify.git"
 license = "MIT"
+keywords = ["cartography", "jenks", "classification"]
 
 [lib]
 path = "src/lib.rs"
