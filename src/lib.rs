@@ -10,6 +10,9 @@ pub use head_tail::{get_head_tail_breaks, get_head_tail_classification};
 mod equal_interval;
 pub use equal_interval::{get_equal_interval_breaks, get_equal_interval_classification};
 
+mod standard_deviation;
+pub use standard_deviation::{get_st_dev_breaks, get_st_dev_classification};
+
 mod utilities;
 pub use utilities::breaks_to_classification;
 pub use utilities::{Bin, Classification, UniqueVal};
@@ -109,5 +112,12 @@ mod tests {
         let data: Vec<f64> = vec![1.0, 2.0, 4.0, 5.0, 7.0, 8.0];
 
         assert_eq!(jenks::calc_gssd(&data), 37.5);
+    }
+
+    #[test]
+    fn test_calc_st_dev() {
+        let data: Vec<f64> = vec![0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0];
+
+        assert_eq!(standard_deviation::calc_st_dev(&data), 1.0801234497346435);
     }
 }
