@@ -71,22 +71,24 @@ pub fn head_tail_recursion(data: &Vec<f64>, breaks: &mut Vec<f64>) {
 
     breaks.push(mean);
 
-    let break_idx;
+    // Binary search to find first data point greater than or equal to the mean
     let mut low = 0;
     let mut high = data.len();
-    'outer: loop {
+    let mut break_idx = 'outer: loop {
         let mid = (low + high) / 2;
         if mean < data[mid] as f64 {
             high = mid;
         } else if mean == data[mid] {
-            break_idx = mid;
-            break 'outer;
+            break 'outer mid;
         } else if high - low <= 1 {
-            break_idx = high;
-            break 'outer;
+            break 'outer high;
         } else {
             low = mid;
         }
+    };
+    // Backtracking to the first occurrence of the target value
+    while break_idx != 0 && data[break_idx] == data[break_idx - 1] {
+        break_idx -= 1;
     }
 
     let head: Vec<f64> = data[break_idx..].to_vec();
