@@ -152,7 +152,7 @@ pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classific
     Classification { bins: results }
 }
 
-/// Returns an Option<usize> containing the index of the bin within which a value should fall given the value and a Classification
+/// Returns an Option<usize> containing the index of the Bin within which a value should fall given the value and a Classification (returns None if the value is outside of the Classification's range)
 ///
 /// # Arguments
 ///
