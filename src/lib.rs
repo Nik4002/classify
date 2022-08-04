@@ -7,6 +7,9 @@ pub use quantile::{get_quantile_breaks, get_quantile_classification};
 mod head_tail;
 pub use head_tail::{get_head_tail_breaks, get_head_tail_classification};
 
+mod equal_interval;
+pub use equal_interval::{get_equal_interval_breaks, get_equal_interval_classification};
+
 mod utilities;
 pub use utilities::breaks_to_classification;
 pub use utilities::{Bin, Classification, UniqueVal};
