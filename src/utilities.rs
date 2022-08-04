@@ -151,3 +151,40 @@ pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classific
 
     Classification { bins: results }
 }
+
+/// Returns an Option<usize> containing the index of the bin within which a value should fall given the value and a Classification
+///
+/// # Arguments
+///
+/// * `val` - Data value to classify
+/// * `class` - Classification object
+///
+/// # Examples
+///
+/// ```
+/// use classify::{classify_val};
+/// use classify::{Classification, Bin};
+///
+/// let vals: Vec<f64> = vec![0.0, 1.5, 3.5];
+/// let class: Classification = Classification {bins: vec![
+///     Bin{bin_start: 0.0, bin_end: 1.0, count: 5},
+///     Bin{bin_start: 1.0, bin_end: 2.0, count: 5},
+///     Bin{bin_start: 2.0, bin_end: 3.0, count: 5}]
+/// };
+///
+/// let mut results: Vec<Option<usize>> = vec![];
+/// for val in vals {results.push(classify_val(val, &class))}
+///
+/// assert_eq!(results, vec![Some(0), Some(1), None])
+/// ```
+pub fn classify_val(val: f64, class: &Classification) -> Option<usize> {
+    if val < class.bins[0].bin_start || val > class.bins[class.bins.len() - 1].bin_end {
+        return None;
+    }
+    for i in 0..class.bins.len() - 1 {
+        if class.bins[i].bin_start <= val && val < class.bins[i].bin_end {
+            return Some(i);
+        }
+    }
+    Some(class.bins.len() - 1) // Accounts for case where val is maximum within dataset
+}
