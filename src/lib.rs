@@ -14,7 +14,7 @@ mod standard_deviation;
 pub use standard_deviation::{get_st_dev_breaks, get_st_dev_classification};
 
 mod utilities;
-pub use utilities::breaks_to_classification;
+pub use utilities::{breaks_to_classification, classify_val};
 pub use utilities::{Bin, Classification, UniqueVal};
 
 #[cfg(test)]
