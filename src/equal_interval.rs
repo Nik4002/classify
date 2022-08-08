@@ -22,11 +22,11 @@ use crate::utilities::Classification;
 /// let num_bins = 3;
 ///
 /// let result: Classification = get_equal_interval_classification(num_bins, &data);
-/// let expected: Classification = Classification {bins: vec![
+/// let expected: Classification = vec![
 ///     Bin{bin_start: 0.0, bin_end: 1.0, count: 2},
 ///     Bin{bin_start: 1.0, bin_end: 2.0, count: 2},
-///     Bin{bin_start: 2.0, bin_end: 3.0, count: 2}]
-/// };
+///     Bin{bin_start: 2.0, bin_end: 3.0, count: 2}
+/// ];
 ///
 /// assert!(result == expected);
 /// ```
