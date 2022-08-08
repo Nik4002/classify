@@ -15,11 +15,12 @@ pub use standard_deviation::{get_st_dev_breaks, get_st_dev_classification};
 
 mod utilities;
 pub use utilities::{breaks_to_classification, classify_val};
-pub use utilities::{Bin, Classification, UniqueVal};
+pub use utilities::{Bin, Classification};
 
 #[cfg(test)]
 mod tests {
     use crate::*;
+    use crate::utilities::UniqueVal;
     use rand::prelude::*;
     use rand::rngs::StdRng;
 
