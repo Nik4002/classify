@@ -19,12 +19,12 @@ use crate::utilities::Classification;
 /// let bin_size = 1.0; // Bins will be the size of one standard deviation
 ///
 /// let result: Classification = get_st_dev_classification(bin_size, &data);
-/// let expected: Classification = Classification {bins: vec![
+/// let expected: Classification = vec![
 ///     Bin{bin_start: 0.0, bin_end: 0.41987655026535653, count: 1},
 ///     Bin{bin_start: 0.41987655026535653, bin_end: 1.5, count: 2},
 ///     Bin{bin_start: 1.5, bin_end: 2.5801234497346437, count: 3},
-///     Bin{bin_start: 2.5801234497346437, bin_end: 3.0, count: 1}]
-/// };
+///     Bin{bin_start: 2.5801234497346437, bin_end: 3.0, count: 1}
+/// ];
 ///
 /// assert!(result == expected);
 /// ```

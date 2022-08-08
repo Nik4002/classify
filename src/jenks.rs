@@ -31,11 +31,11 @@ use crate::utilities::{Classification, UniqueVal};
 /// let num_bins = 3;
 ///
 /// let result: Classification = get_jenks_classification(num_bins, &data);
-/// let expected: Classification = Classification {bins: vec![
+/// let expected: Classification = vec![
 ///     Bin{bin_start: 1.0, bin_end: 4.0, count: 2},
 ///     Bin{bin_start: 4.0, bin_end: 7.0, count: 2},
-///     Bin{bin_start: 7.0, bin_end: 8.0, count: 2}]
-/// };
+///     Bin{bin_start: 7.0, bin_end: 8.0, count: 2}
+/// ];
 ///
 /// assert!(result == expected);
 /// ```

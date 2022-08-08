@@ -23,11 +23,11 @@ use crate::utilities::Classification;
 /// let num_bins = 3;
 ///
 /// let result: Classification = get_quantile_classification(num_bins, &data);
-/// let expected: Classification = Classification {bins: vec![
+/// let expected: Classification = vec![
 ///     Bin{bin_start: 1.0, bin_end: 3.5, count: 3},
 ///     Bin{bin_start: 3.5, bin_end: 6.5, count: 3},
-///     Bin{bin_start: 6.5, bin_end: 9.0, count: 3}]
-/// };
+///     Bin{bin_start: 6.5, bin_end: 9.0, count: 3}
+/// ];
 ///
 /// assert!(result == expected);
 /// ```

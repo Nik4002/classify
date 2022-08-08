@@ -22,20 +22,7 @@ impl PartialEq for Bin {
 }
 
 /// Represents a full classification, which is a collection of Bin objects
-pub struct Classification {
-    pub bins: Vec<Bin>,
-}
-
-impl PartialEq for Classification {
-    fn eq(&self, other: &Self) -> bool {
-        for i in 0..self.bins.len() {
-            if self.bins[i] != other.bins[i] {
-                return false;
-            }
-        }
-        true
-    }
-}
+pub type Classification = Vec<Bin>;
 
 /// Populates an empty vector of UniqueVal objects for each unique value in the dataset in the format (value, first occurrence index, last occurrence index)
 ///
@@ -104,11 +91,11 @@ pub fn unique_to_normal_breaks(
 /// let breaks: Vec<f64> = vec![2.0, 5.0];
 ///
 /// let result: Classification = breaks_to_classification(&breaks, &data);
-/// let expected: Classification = Classification {bins: vec![
+/// let expected: Classification = vec![
 ///     Bin{bin_start: 1.0, bin_end: 2.0, count: 1},
 ///     Bin{bin_start: 2.0, bin_end: 5.0, count: 2},
-///     Bin{bin_start: 5.0, bin_end: 8.0, count: 3}]
-/// };
+///     Bin{bin_start: 5.0, bin_end: 8.0, count: 3}
+/// ];
 ///
 /// assert!(result == expected);
 /// ```
@@ -130,7 +117,7 @@ pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classific
     }
     bounds.push(max_value);
 
-    let mut results: Vec<Bin> = vec![];
+    let mut results: Classification = vec![];
     for i in 0..(bounds.len() - 1) {
         results.push(Bin {
             bin_start: bounds[i],
@@ -149,7 +136,7 @@ pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classific
     }
     results[num_bins - 1].count += 1;
 
-    Classification { bins: results }
+    results
 }
 
 /// Returns an Option<usize> containing the index of the Bin within which a value should fall given the value and a Classification (returns None if the value is outside of the Classification's range)
@@ -166,11 +153,11 @@ pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classific
 /// use classify::{Classification, Bin};
 ///
 /// let vals: Vec<f64> = vec![0.0, 1.5, 3.5];
-/// let class: Classification = Classification {bins: vec![
+/// let class: Classification = vec![
 ///     Bin{bin_start: 0.0, bin_end: 1.0, count: 5},
 ///     Bin{bin_start: 1.0, bin_end: 2.0, count: 5},
-///     Bin{bin_start: 2.0, bin_end: 3.0, count: 5}]
-/// };
+///     Bin{bin_start: 2.0, bin_end: 3.0, count: 5}
+/// ];
 ///
 /// let mut results: Vec<Option<usize>> = vec![];
 /// for val in vals {results.push(classify_val(val, &class))}
@@ -178,13 +165,13 @@ pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classific
 /// assert_eq!(results, vec![Some(0), Some(1), None])
 /// ```
 pub fn classify_val(val: f64, class: &Classification) -> Option<usize> {
-    if val < class.bins[0].bin_start || val > class.bins[class.bins.len() - 1].bin_end {
+    if val < class[0].bin_start || val > class[class.len() - 1].bin_end {
         return None;
     }
-    for i in 0..class.bins.len() - 1 {
-        if class.bins[i].bin_start <= val && val < class.bins[i].bin_end {
+    for (i, _item) in class.iter().enumerate() {
+        if class[i].bin_start <= val && val < class[i].bin_end {
             return Some(i);
         }
     }
-    Some(class.bins.len() - 1) // Accounts for case where val is maximum within dataset
+    Some(class.len() - 1) // Accounts for case where val is maximum within dataset
 }

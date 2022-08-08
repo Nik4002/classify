@@ -17,11 +17,11 @@ use crate::utilities::Classification;
 ///                           1.0/6.0, 1.0/7.0, 1.0/8.0, 1.0/9.0, 1.0/10.0];
 ///
 /// let result: Classification = get_head_tail_classification(&data);
-/// let expected: Classification = Classification {bins: vec![
+/// let expected: Classification = vec![
 ///     Bin{bin_start: 0.1, bin_end: 0.2928968253968254, count: 7},
 ///     Bin{bin_start: 0.2928968253968254, bin_end: 0.611111111111111, count: 2},
-///     Bin{bin_start: 0.611111111111111, bin_end: 1.0, count: 1}]
-/// };
+///     Bin{bin_start: 0.611111111111111, bin_end: 1.0, count: 1}
+/// ];
 ///
 /// assert!(result == expected);
 /// ```
