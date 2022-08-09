@@ -19,10 +19,19 @@ pub use utilities::{Bin, Classification};
 
 #[cfg(test)]
 mod tests {
+    use crate::utilities::{to_vec_f64, UniqueVal};
     use crate::*;
-    use crate::utilities::UniqueVal;
     use rand::prelude::*;
     use rand::rngs::StdRng;
+
+    #[test]
+    fn test_to_vec_f64() {
+        let generic_data: Vec<usize> = vec![0, 1, 2, 3];
+        let data = to_vec_f64(&generic_data);
+        let expected: Vec<f64> = vec![0.0, 1.0, 2.0, 3.0];
+
+        assert_eq!(data, expected);
+    }
 
     #[test]
     fn test_create_unique_val_mapping() {

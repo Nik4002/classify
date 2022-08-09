@@ -1,5 +1,6 @@
-use crate::utilities::breaks_to_classification;
 use crate::utilities::Classification;
+use crate::utilities::{breaks_to_classification, to_vec_f64};
+use num::ToPrimitive;
 
 /// Returns a Classification object following the Standard Deviation Breaks algorithm given the desired bin size as a proportion of a standard deviation and one-dimensional f64 data
 /// Note: This algorithm calculates Standard Deviation with Bessel's correction
@@ -9,13 +10,17 @@ use crate::utilities::Classification;
 /// * `bin_size` - A float (f64) representing the proportion of a standard deviation each bin should encompass
 /// * `data` - A reference to a vector of unsorted data points (f64) to generate a Classification for
 ///
+/// # Edge cases
+///
+/// * Inputting large u64/i64 data (near their max values) will result in loss of precision because data is being cast to f64
+///
 /// # Examples
 ///
 /// ```
 /// use classify::get_st_dev_classification;
 /// use classify::{Classification, Bin};
 ///
-/// let data: Vec<f64> = vec![0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0];
+/// let data: Vec<f32> = vec![0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0];
 /// let bin_size = 1.0; // Bins will be the size of one standard deviation
 ///
 /// let result: Classification = get_st_dev_classification(bin_size, &data);
@@ -28,7 +33,7 @@ use crate::utilities::Classification;
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_st_dev_classification(bin_size: f64, data: &Vec<f64>) -> Classification {
+pub fn get_st_dev_classification<T: ToPrimitive>(bin_size: f64, data: &Vec<T>) -> Classification {
     let breaks: Vec<f64> = get_st_dev_breaks(bin_size, data);
     breaks_to_classification(&breaks, data)
 }
@@ -41,24 +46,30 @@ pub fn get_st_dev_classification(bin_size: f64, data: &Vec<f64>) -> Classificati
 /// * `bin_size` - A float (f64) representing the proportion of a standard deviation each bin should encompass
 /// * `data` - A reference to a vector of unsorted data points (f64) to generate breaks for
 ///
+/// # Edge cases
+///
+/// * Inputting large u64/i64 data (near their max values) will result in loss of precision because data is being cast to f64
+///
 /// # Examples
 ///
 /// ```
 /// use classify::get_st_dev_breaks;
 ///
-/// let data: Vec<f64> = vec![0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0];
+/// let data: Vec<f32> = vec![0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0];
 /// let bin_size = 1.0; // Bins will be the size of one standard deviation
 ///
 /// let result: Vec<f64> = get_st_dev_breaks(bin_size, &data);
 ///
 /// assert_eq!(result, vec![0.41987655026535653, 1.5, 2.5801234497346437]);
 /// ```
-pub fn get_st_dev_breaks(bin_size: f64, data: &Vec<f64>) -> Vec<f64> {
+pub fn get_st_dev_breaks<T: ToPrimitive>(bin_size: f64, data: &Vec<T>) -> Vec<f64> {
+    let data = to_vec_f64(data);
+
     let mut min_value = data[0];
     let mut max_value = data[0];
     let mut mean = 0.0;
-    for item in data {
-        mean += *item;
+    for item in &data {
+        mean += item;
         if *item < min_value {
             min_value = *item;
         } else if *item > max_value {
@@ -67,7 +78,7 @@ pub fn get_st_dev_breaks(bin_size: f64, data: &Vec<f64>) -> Vec<f64> {
     }
     mean /= data.len() as f64;
 
-    let st_dev = calc_st_dev(data);
+    let st_dev = calc_st_dev(&data);
     let new_dev = st_dev * bin_size;
 
     let devs_below_mean = ((mean - min_value) / new_dev) as isize;
