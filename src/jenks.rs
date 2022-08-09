@@ -9,7 +9,7 @@ use crate::utilities::{
 };
 use crate::utilities::{Classification, UniqueVal};
 
-/// Returns a Classification object following the Jenks Natural Breaks algorithm given the desired number of bins and one-dimensional f64 data
+/// Returns a Classification object following the Jenks Natural Breaks algorithm given the desired number of bins and one-dimensional data
 ///
 /// # Arguments
 ///

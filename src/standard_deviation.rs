@@ -2,7 +2,7 @@ use crate::utilities::Classification;
 use crate::utilities::{breaks_to_classification, to_vec_f64};
 use num_traits::ToPrimitive;
 
-/// Returns a Classification object following the Standard Deviation Breaks algorithm given the desired bin size as a proportion of a standard deviation and one-dimensional f64 data
+/// Returns a Classification object following the Standard Deviation Breaks algorithm given the desired bin size as a proportion of a standard deviation and one-dimensional data
 /// Note: This algorithm calculates Standard Deviation with Bessel's correction
 ///
 /// # Arguments

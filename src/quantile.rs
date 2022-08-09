@@ -2,7 +2,7 @@ use crate::utilities::Classification;
 use crate::utilities::{breaks_to_classification, to_vec_f64};
 use num_traits::ToPrimitive;
 
-/// Returns a Classification object following the Quantile Breaks algorithm given the desired number of bins and one-dimensional f64 data
+/// Returns a Classification object following the Quantile Breaks algorithm given the desired number of bins and one-dimensional data
 ///
 /// # Arguments
 ///
