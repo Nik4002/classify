@@ -1,3 +1,8 @@
+# Version 0.2.1 - 8/9/2022
+
+Changes:
+ * Made all functions compatible with all numeric data types (previously only f64)
+
 # Version 0.2.0 - 8/8/2022
 
 Changes:
@@ -8,7 +13,7 @@ Changes:
 # Version 0.1.5 - 8/4/2022
 
 Changes: 
- * Added `classify_val` function`
+ * Added `classify_val` function
 
 # Version 0.1.4 - 8/4/2022
 
