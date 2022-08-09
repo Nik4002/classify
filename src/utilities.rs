@@ -1,3 +1,5 @@
+use num_traits::ToPrimitive;
+
 /// Represents a unique value found within a sorted dataset along with the indices of its first and last occurrences in the dataset
 pub struct UniqueVal {
     pub val: f64,
@@ -23,6 +25,19 @@ impl PartialEq for Bin {
 
 /// Represents a full classification, which is a collection of Bin objects
 pub type Classification = Vec<Bin>;
+
+/// Translates generic numeric vectors to Vec<f64> using the ToPrimitive trait from the num crate
+///
+/// # Arguments
+///
+/// * `data` - A reference to a vector of generic type T where T implements the ToPrimitive trait
+pub fn to_vec_f64<T: ToPrimitive>(data: &Vec<T>) -> Vec<f64> {
+    let mut result: Vec<f64> = vec![];
+    for item in data {
+        result.push(item.to_f64().unwrap());
+    }
+    result
+}
 
 /// Populates an empty vector of UniqueVal objects for each unique value in the dataset in the format (value, first occurrence index, last occurrence index)
 ///
@@ -99,10 +114,15 @@ pub fn unique_to_normal_breaks(
 ///
 /// assert!(result == expected);
 /// ```
-pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classification {
+pub fn breaks_to_classification<T: ToPrimitive>(
+    breaks: &Vec<f64>,
+    data: &Vec<T>,
+) -> Classification {
+    let data = to_vec_f64(data);
+
     let mut min_value = data[0];
     let mut max_value = data[0];
-    for item in data {
+    for item in &data {
         if *item < min_value {
             min_value = *item;
         }
@@ -128,8 +148,8 @@ pub fn breaks_to_classification(breaks: &Vec<f64>, data: &Vec<f64>) -> Classific
 
     let num_bins = results.len();
     for bin in results.iter_mut().take(num_bins) {
-        for item in data {
-            if &bin.bin_start <= item && item < &bin.bin_end {
+        for item in &data {
+            if bin.bin_start <= *item && *item < bin.bin_end {
                 bin.count += 1;
             }
         }
