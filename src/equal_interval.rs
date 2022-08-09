@@ -1,5 +1,5 @@
-use crate::utilities::{breaks_to_classification, to_vec_f64};
 use crate::utilities::Classification;
+use crate::utilities::{breaks_to_classification, to_vec_f64};
 use num::ToPrimitive;
 
 /// Returns a Classification object following the Equal Interval Breaks algorithm given the desired number of bins and one-dimensional f64 data
@@ -32,7 +32,10 @@ use num::ToPrimitive;
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_equal_interval_classification<T: ToPrimitive>(num_bins: usize, data: &Vec<T>) -> Classification {
+pub fn get_equal_interval_classification<T: ToPrimitive>(
+    num_bins: usize,
+    data: &Vec<T>,
+) -> Classification {
     let breaks: Vec<f64> = get_equal_interval_breaks(num_bins, data);
     breaks_to_classification(&breaks, data)
 }

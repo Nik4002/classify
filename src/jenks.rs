@@ -1,11 +1,11 @@
+use num::ToPrimitive;
 use rand::prelude::*;
 use rand::rngs::StdRng;
-use num::ToPrimitive;
 
 use std::collections::HashSet;
 
 use crate::utilities::{
-    to_vec_f64, breaks_to_classification, create_unique_val_mapping, unique_to_normal_breaks,
+    breaks_to_classification, create_unique_val_mapping, to_vec_f64, unique_to_normal_breaks,
 };
 use crate::utilities::{Classification, UniqueVal};
 

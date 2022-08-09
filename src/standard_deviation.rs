@@ -1,5 +1,5 @@
-use crate::utilities::{breaks_to_classification, to_vec_f64};
 use crate::utilities::Classification;
+use crate::utilities::{breaks_to_classification, to_vec_f64};
 use num::ToPrimitive;
 
 /// Returns a Classification object following the Standard Deviation Breaks algorithm given the desired bin size as a proportion of a standard deviation and one-dimensional f64 data
@@ -13,7 +13,7 @@ use num::ToPrimitive;
 /// # Edge cases
 ///
 /// * Inputting large u64/i64 data (near their max values) will result in loss of precision because data is being cast to f64
-/// 
+///
 /// # Examples
 ///
 /// ```
@@ -49,7 +49,7 @@ pub fn get_st_dev_classification<T: ToPrimitive>(bin_size: f64, data: &Vec<T>) -
 /// # Edge cases
 ///
 /// * Inputting large u64/i64 data (near their max values) will result in loss of precision because data is being cast to f64
-/// 
+///
 /// # Examples
 ///
 /// ```

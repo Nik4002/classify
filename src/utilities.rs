@@ -27,9 +27,9 @@ impl PartialEq for Bin {
 pub type Classification = Vec<Bin>;
 
 /// Translates generic numeric vectors to Vec<f64> using the ToPrimitive trait from the num crate
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `data` - A reference to a vector of generic type T where T implements the ToPrimitive trait
 pub fn to_vec_f64<T: ToPrimitive>(data: &Vec<T>) -> Vec<f64> {
     let mut result: Vec<f64> = vec![];
@@ -114,7 +114,10 @@ pub fn unique_to_normal_breaks(
 ///
 /// assert!(result == expected);
 /// ```
-pub fn breaks_to_classification<T: ToPrimitive>(breaks: &Vec<f64>, data: &Vec<T>) -> Classification {
+pub fn breaks_to_classification<T: ToPrimitive>(
+    breaks: &Vec<f64>,
+    data: &Vec<T>,
+) -> Classification {
     let data = to_vec_f64(data);
 
     let mut min_value = data[0];

@@ -1,5 +1,5 @@
-use crate::utilities::{breaks_to_classification, to_vec_f64};
 use crate::utilities::Classification;
+use crate::utilities::{breaks_to_classification, to_vec_f64};
 use num::ToPrimitive;
 
 /// Returns a Classification object following the Head-Tail Breaks algorithm given one-dimensional f64 data
@@ -9,9 +9,9 @@ use num::ToPrimitive;
 /// * `data` - A reference to a vector of unsorted data points to generate a Classification for
 ///
 /// # Edge Cases
-/// 
+///
 /// * Inputting large u64/i64 data (near their max values) will result in loss of precision because data is being cast to f64
-/// 
+///
 /// # Examples
 ///
 /// ```
@@ -42,7 +42,7 @@ pub fn get_head_tail_classification<T: ToPrimitive>(data: &Vec<T>) -> Classifica
 /// * `data` - A reference to a vector of unsorted data points to generate breaks for
 ///
 /// # Edge Cases
-/// 
+///
 /// * Inputting large u64/i64 data (near their max values) will result in loss of precision because data is being cast to f64
 ///
 /// # Examples
@@ -59,7 +59,7 @@ pub fn get_head_tail_classification<T: ToPrimitive>(data: &Vec<T>) -> Classifica
 /// ```
 pub fn get_head_tail_breaks<T: ToPrimitive>(data: &Vec<T>) -> Vec<f64> {
     let data = to_vec_f64(data);
-    
+
     let mut breaks: Vec<f64> = vec![];
 
     let mut sorted_data: Vec<f64> = vec![];

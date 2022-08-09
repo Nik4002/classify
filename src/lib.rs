@@ -19,8 +19,8 @@ pub use utilities::{Bin, Classification};
 
 #[cfg(test)]
 mod tests {
+    use crate::utilities::{to_vec_f64, UniqueVal};
     use crate::*;
-    use crate::utilities::{UniqueVal, to_vec_f64};
     use rand::prelude::*;
     use rand::rngs::StdRng;
 
