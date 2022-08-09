@@ -1,4 +1,4 @@
-use num::ToPrimitive;
+use num_traits::ToPrimitive;
 use rand::prelude::*;
 use rand::rngs::StdRng;
 

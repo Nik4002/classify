@@ -1,4 +1,4 @@
-use num::ToPrimitive;
+use num_traits::ToPrimitive;
 
 /// Represents a unique value found within a sorted dataset along with the indices of its first and last occurrences in the dataset
 pub struct UniqueVal {
