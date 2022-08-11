@@ -11,3 +11,12 @@ Implemented as of version 0.2.1:
 
 Planned future features:
  * Classification methods: Hinge
+
+
+# Web Assembly 
+
+ To generate the WASM package run 
+
+ ```bash
+wasm-pack build --release -- -features js
+```

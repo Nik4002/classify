@@ -31,7 +31,7 @@ pub type Classification = Vec<Bin>;
 /// # Arguments
 ///
 /// * `data` - A reference to a vector of generic type T where T implements the ToPrimitive trait
-pub fn to_vec_f64<T: ToPrimitive>(data: &Vec<T>) -> Vec<f64> {
+pub fn to_vec_f64<T: ToPrimitive>(data: &[T]) -> Vec<f64> {
     let mut result: Vec<f64> = vec![];
     for item in data {
         result.push(item.to_f64().unwrap());
@@ -116,7 +116,7 @@ pub fn unique_to_normal_breaks(
 /// ```
 pub fn breaks_to_classification<T: ToPrimitive>(
     breaks: &Vec<f64>,
-    data: &Vec<T>,
+    data: &[T],
 ) -> Classification {
     let data = to_vec_f64(data);
 

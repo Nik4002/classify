@@ -41,7 +41,7 @@ use crate::utilities::{Classification, UniqueVal};
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_jenks_classification<T: ToPrimitive>(num_bins: usize, data: &Vec<T>) -> Classification {
+pub fn get_jenks_classification<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Classification {
     let breaks: Vec<f64> = get_jenks_breaks(num_bins, data);
     breaks_to_classification(&breaks, data)
 }
@@ -73,7 +73,7 @@ pub fn get_jenks_classification<T: ToPrimitive>(num_bins: usize, data: &Vec<T>) 
 ///
 /// assert_eq!(result, vec![4.0, 7.0]);
 /// ```
-pub fn get_jenks_breaks<T: ToPrimitive>(num_bins: usize, data: &Vec<T>) -> Vec<f64> {
+pub fn get_jenks_breaks<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Vec<f64> {
     let data = to_vec_f64(data);
 
     let num_vals = data.len();
