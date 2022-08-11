@@ -114,10 +114,7 @@ pub fn unique_to_normal_breaks(
 ///
 /// assert!(result == expected);
 /// ```
-pub fn breaks_to_classification<T: ToPrimitive>(
-    breaks: &Vec<f64>,
-    data: &[T],
-) -> Classification {
+pub fn breaks_to_classification<T: ToPrimitive>(breaks: &Vec<f64>, data: &[T]) -> Classification {
     let data = to_vec_f64(data);
 
     let mut min_value = data[0];

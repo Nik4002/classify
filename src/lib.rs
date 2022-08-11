@@ -18,7 +18,7 @@ pub use utilities::{breaks_to_classification, classify_val};
 pub use utilities::{Bin, Classification};
 
 #[cfg(target_family = "wasm")]
- mod wasm;
+mod wasm;
 
 #[cfg(test)]
 mod tests {
