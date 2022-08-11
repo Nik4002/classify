@@ -33,7 +33,7 @@ use num_traits::ToPrimitive;
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_st_dev_classification<T: ToPrimitive>(bin_size: f64, data: &Vec<T>) -> Classification {
+pub fn get_st_dev_classification<T: ToPrimitive>(bin_size: f64, data: &[T]) -> Classification {
     let breaks: Vec<f64> = get_st_dev_breaks(bin_size, data);
     breaks_to_classification(&breaks, data)
 }
@@ -62,7 +62,7 @@ pub fn get_st_dev_classification<T: ToPrimitive>(bin_size: f64, data: &Vec<T>) -
 ///
 /// assert_eq!(result, vec![0.41987655026535653, 1.5, 2.5801234497346437]);
 /// ```
-pub fn get_st_dev_breaks<T: ToPrimitive>(bin_size: f64, data: &Vec<T>) -> Vec<f64> {
+pub fn get_st_dev_breaks<T: ToPrimitive>(bin_size: f64, data: &[T]) -> Vec<f64> {
     let data = to_vec_f64(data);
 
     let mut min_value = data[0];

@@ -34,7 +34,7 @@ use num_traits::ToPrimitive;
 /// ```
 pub fn get_equal_interval_classification<T: ToPrimitive>(
     num_bins: usize,
-    data: &Vec<T>,
+    data: &[T],
 ) -> Classification {
     let breaks: Vec<f64> = get_equal_interval_breaks(num_bins, data);
     breaks_to_classification(&breaks, data)
@@ -64,7 +64,7 @@ pub fn get_equal_interval_classification<T: ToPrimitive>(
 ///
 /// assert_eq!(result, vec![1.0, 2.0]);
 /// ```
-pub fn get_equal_interval_breaks<T: ToPrimitive>(num_bins: usize, data: &Vec<T>) -> Vec<f64> {
+pub fn get_equal_interval_breaks<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Vec<f64> {
     let data = to_vec_f64(data);
 
     let mut min_value = data[0];
