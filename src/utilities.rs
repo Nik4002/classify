@@ -11,7 +11,7 @@ pub struct UniqueVal {
 pub struct Bin {
     pub bin_start: f64,
     pub bin_end: f64,
-    pub count: i64,
+    pub count: u64,
 }
 
 impl PartialEq for Bin {
