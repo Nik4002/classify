@@ -5,6 +5,13 @@
     <title>hello-wasm example</title>
   </head>
   <body>
-    <script src="./index.js"></script>
+    <script type="module">
+      import init, {greet, get_jenks_breaks,get_jenks_classification} from "./pkg/classify.js";
+      init()
+        .then(() => {
+          greet("HEY!")
+          console.log("ject breaks ", get_jenks_classification([1,2,3,4,44,56]))
+        });
+    </script>
   </body>
 </html>
