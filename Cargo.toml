@@ -20,7 +20,7 @@ path = "src/lib.rs"
 rand = "0.8.5"
 num-traits = "0.2"
 wasm-bindgen = "0.2.82"
-getrandom = "0.2.7"
+getrandom = { version = "0.2.7", features = ["js"] }
 
 [features]
 js = ["getrandom/js"]
