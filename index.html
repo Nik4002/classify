@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>hello-wasm example</title>
+  </head>
+  <body>
+    <script type="module">
+      import init, {get_jenks_breaks, get_jenks_classification, get_quantile_breaks, get_quantile_classification, get_head_tail_breaks, get_head_tail_classification, get_equal_interval_breaks, get_equal_interval_classification, get_st_dev_breaks, get_st_dev_classification} from "./pkg/classify.js";
+      init()
+        .then(() => {
+          console.log("jenks breaks ", get_jenks_breaks(3, [1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [5, 9]
+          console.log("quantile breaks ", get_quantile_breaks(3, [1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [4, 8]
+          console.log("head-tail breaks ", get_head_tail_breaks([1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [6]
+          console.log("equal interval breaks ", get_equal_interval_breaks(3, [1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [4.333333333333333, 7.666666666666666]
+          console.log("standard deviation breaks ", get_st_dev_breaks(1, [1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [2.429285785728575, 6, 9.570714214271426]
+
+          console.log("jenks classification ", get_jenks_classification(3, [1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [5, 9]
+          console.log("quantile classification ", get_quantile_classification(3, [1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [4, 8]
+          console.log("head-tail classification ", get_head_tail_classification([1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [6]
+          console.log("equal interval classification ", get_equal_interval_classification(3, [1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [4.333333333333333, 7.666666666666666]
+          console.log("standard deviation classification ", get_st_dev_classification(1, [1, 2, 3, 5, 6, 7, 9, 10, 11])) // Expected result: [2.429285785728575, 6, 9.570714214271426]
+        });
+    </script>
+  </body>
+</html>

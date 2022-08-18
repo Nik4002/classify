@@ -11,7 +11,7 @@ pub struct UniqueVal {
 pub struct Bin {
     pub bin_start: f64,
     pub bin_end: f64,
-    pub count: i64,
+    pub count: u64,
 }
 
 impl PartialEq for Bin {
@@ -31,7 +31,7 @@ pub type Classification = Vec<Bin>;
 /// # Arguments
 ///
 /// * `data` - A reference to a vector of generic type T where T implements the ToPrimitive trait
-pub fn to_vec_f64<T: ToPrimitive>(data: &Vec<T>) -> Vec<f64> {
+pub fn to_vec_f64<T: ToPrimitive>(data: &[T]) -> Vec<f64> {
     let mut result: Vec<f64> = vec![];
     for item in data {
         result.push(item.to_f64().unwrap());
@@ -114,10 +114,7 @@ pub fn unique_to_normal_breaks(
 ///
 /// assert!(result == expected);
 /// ```
-pub fn breaks_to_classification<T: ToPrimitive>(
-    breaks: &Vec<f64>,
-    data: &Vec<T>,
-) -> Classification {
+pub fn breaks_to_classification<T: ToPrimitive>(breaks: &Vec<f64>, data: &[T]) -> Classification {
     let data = to_vec_f64(data);
 
     let mut min_value = data[0];

@@ -30,7 +30,7 @@ use num_traits::ToPrimitive;
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_head_tail_classification<T: ToPrimitive>(data: &Vec<T>) -> Classification {
+pub fn get_head_tail_classification<T: ToPrimitive>(data: &[T]) -> Classification {
     let breaks: Vec<f64> = get_head_tail_breaks(data);
     breaks_to_classification(&breaks, data)
 }
@@ -57,7 +57,7 @@ pub fn get_head_tail_classification<T: ToPrimitive>(data: &Vec<T>) -> Classifica
 ///
 /// assert_eq!(result, vec![0.2928968253968254, 0.611111111111111]);
 /// ```
-pub fn get_head_tail_breaks<T: ToPrimitive>(data: &Vec<T>) -> Vec<f64> {
+pub fn get_head_tail_breaks<T: ToPrimitive>(data: &[T]) -> Vec<f64> {
     let data = to_vec_f64(data);
 
     let mut breaks: Vec<f64> = vec![];

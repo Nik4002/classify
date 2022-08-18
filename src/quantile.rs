@@ -33,10 +33,7 @@ use num_traits::ToPrimitive;
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_quantile_classification<T: ToPrimitive>(
-    num_bins: usize,
-    data: &Vec<T>,
-) -> Classification {
+pub fn get_quantile_classification<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Classification {
     let breaks: Vec<f64> = get_quantile_breaks(num_bins, data);
     breaks_to_classification(&breaks, data)
 }
@@ -66,7 +63,7 @@ pub fn get_quantile_classification<T: ToPrimitive>(
 ///
 /// assert_eq!(result, vec![3.5, 6.5]);
 /// ```
-pub fn get_quantile_breaks<T: ToPrimitive>(num_bins: usize, data: &Vec<T>) -> Vec<f64> {
+pub fn get_quantile_breaks<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Vec<f64> {
     let data = to_vec_f64(data);
 
     if num_bins == 0 || num_bins == 1 {
