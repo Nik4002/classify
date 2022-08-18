@@ -13,6 +13,9 @@ pub use equal_interval::{get_equal_interval_breaks, get_equal_interval_classific
 mod standard_deviation;
 pub use standard_deviation::{get_st_dev_breaks, get_st_dev_classification};
 
+mod hinge;
+pub use hinge::{get_hinge_breaks, get_hinge_classification};
+
 mod utilities;
 pub use utilities::{breaks_to_classification, classify_val};
 pub use utilities::{Bin, Classification};
@@ -29,11 +32,25 @@ mod tests {
 
     #[test]
     fn test_to_vec_f64() {
-        let generic_data: Vec<usize> = vec![0, 1, 2, 3];
-        let data = to_vec_f64(&generic_data);
+        let data: Vec<usize> = vec![0, 1, 2, 3];
+        let data = to_vec_f64(&data);
         let expected: Vec<f64> = vec![0.0, 1.0, 2.0, 3.0];
 
         assert_eq!(data, expected);
+    }
+
+    #[test]
+    fn test_percentile() {
+        let data: Vec<usize> = vec![0, 1, 2, 3, 4, 5, 6, 7, 8];
+        let data = to_vec_f64(&data);
+        let percs = vec![10, 25, 50, 75, 90];
+        let mut result = vec![];
+        for perc in percs {
+            result.push(hinge::percentile(perc, &data));
+        }
+        let expected = vec![0.8, 2.0, 4.0, 6.0, 7.2];
+
+        assert_eq!(result, expected);
     }
 
     #[test]
