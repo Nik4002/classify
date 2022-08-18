@@ -7,7 +7,7 @@ use num_traits::ToPrimitive;
 ///
 /// # Arguments
 ///
-/// * `bin_size` - A float (f64) representing the proportion of a standard deviation each bin should encompass
+/// * `bin_size` - A float representing the proportion of a standard deviation each bin should encompass
 /// * `data` - A reference to a vector of unsorted data points (f64) to generate a Classification for
 ///
 /// # Edge cases
@@ -33,7 +33,10 @@ use num_traits::ToPrimitive;
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_st_dev_classification<T: ToPrimitive>(bin_size: f64, data: &[T]) -> Classification {
+pub fn get_st_dev_classification<T: ToPrimitive, S: ToPrimitive>(
+    bin_size: S,
+    data: &[T],
+) -> Classification {
     let breaks: Vec<f64> = get_st_dev_breaks(bin_size, data);
     breaks_to_classification(&breaks, data)
 }
@@ -43,7 +46,7 @@ pub fn get_st_dev_classification<T: ToPrimitive>(bin_size: f64, data: &[T]) -> C
 ///
 /// # Arguments
 ///
-/// * `bin_size` - A float (f64) representing the proportion of a standard deviation each bin should encompass
+/// * `bin_size` - A float representing the proportion of a standard deviation each bin should encompass
 /// * `data` - A reference to a collection of unsorted data points (f64) to generate breaks for
 ///
 /// # Edge cases
@@ -62,7 +65,8 @@ pub fn get_st_dev_classification<T: ToPrimitive>(bin_size: f64, data: &[T]) -> C
 ///
 /// assert_eq!(result, vec![0.41987655026535653, 1.5, 2.5801234497346437]);
 /// ```
-pub fn get_st_dev_breaks<T: ToPrimitive>(bin_size: f64, data: &[T]) -> Vec<f64> {
+pub fn get_st_dev_breaks<T: ToPrimitive, S: ToPrimitive>(bin_size: S, data: &[T]) -> Vec<f64> {
+    let bin_size = bin_size.to_f64().unwrap();
     let data = to_vec_f64(data);
 
     let mut min_value = data[0];
