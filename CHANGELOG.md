@@ -1,3 +1,11 @@
+# Version 0.2.2 - 8/18/2022
+
+Changes:
+ * Added Hinge Breaks functions
+ * Added WebAssembly package (up to date)
+ * Made all functions compatible with all basic collection data types (previously only vector)
+ * Documentation updates
+
 # Version 0.2.1 - 8/9/2022
 
 Changes:

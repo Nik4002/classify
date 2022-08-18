@@ -2,11 +2,11 @@ use crate::utilities::Classification;
 use crate::utilities::{breaks_to_classification, to_vec_f64};
 use num_traits::ToPrimitive;
 
-/// Returns a Classification object following the Head-Tail Breaks algorithm given one-dimensional f64 data
+/// Returns a Classification object following the Head-Tail Breaks algorithm given one-dimensional data
 ///
 /// # Arguments
 ///
-/// * `data` - A reference to a vector of unsorted data points to generate a Classification for
+/// * `data` - A reference to a collection of unsorted data points to generate a Classification for
 ///
 /// # Edge Cases
 ///
@@ -30,7 +30,7 @@ use num_traits::ToPrimitive;
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_head_tail_classification<T: ToPrimitive>(data: &Vec<T>) -> Classification {
+pub fn get_head_tail_classification<T: ToPrimitive>(data: &[T]) -> Classification {
     let breaks: Vec<f64> = get_head_tail_breaks(data);
     breaks_to_classification(&breaks, data)
 }
@@ -39,7 +39,7 @@ pub fn get_head_tail_classification<T: ToPrimitive>(data: &Vec<T>) -> Classifica
 ///
 /// # Arguments
 ///
-/// * `data` - A reference to a vector of unsorted data points to generate breaks for
+/// * `data` - A reference to a collection of unsorted data points to generate breaks for
 ///
 /// # Edge Cases
 ///
@@ -57,7 +57,7 @@ pub fn get_head_tail_classification<T: ToPrimitive>(data: &Vec<T>) -> Classifica
 ///
 /// assert_eq!(result, vec![0.2928968253968254, 0.611111111111111]);
 /// ```
-pub fn get_head_tail_breaks<T: ToPrimitive>(data: &Vec<T>) -> Vec<f64> {
+pub fn get_head_tail_breaks<T: ToPrimitive>(data: &[T]) -> Vec<f64> {
     let data = to_vec_f64(data);
 
     let mut breaks: Vec<f64> = vec![];

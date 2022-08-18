@@ -2,12 +2,12 @@ use crate::utilities::Classification;
 use crate::utilities::{breaks_to_classification, to_vec_f64};
 use num_traits::ToPrimitive;
 
-/// Returns a Classification object following the Quantile Breaks algorithm given the desired number of bins and one-dimensional f64 data
+/// Returns a Classification object following the Quantile Breaks algorithm given the desired number of bins and one-dimensional data
 ///
 /// # Arguments
 ///
 /// * `num_bins` - An integer (usize) representing the desired number of bins
-/// * `data` - A reference to a vector of unsorted data points to generate a Classification for
+/// * `data` - A reference to a collection of unsorted data points to generate a Classification for
 ///
 /// # Edge Cases
 ///
@@ -33,10 +33,7 @@ use num_traits::ToPrimitive;
 ///
 /// assert!(result == expected);
 /// ```
-pub fn get_quantile_classification<T: ToPrimitive>(
-    num_bins: usize,
-    data: &Vec<T>,
-) -> Classification {
+pub fn get_quantile_classification<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Classification {
     let breaks: Vec<f64> = get_quantile_breaks(num_bins, data);
     breaks_to_classification(&breaks, data)
 }
@@ -46,7 +43,7 @@ pub fn get_quantile_classification<T: ToPrimitive>(
 /// # Arguments
 ///
 /// * `num_bins` - The desired number of bins
-/// * `data` - A reference to a vector of unsorted data points to generate breaks for
+/// * `data` - A reference to a collection of unsorted data points to generate breaks for
 ///
 /// # Edge Cases
 ///
@@ -66,7 +63,7 @@ pub fn get_quantile_classification<T: ToPrimitive>(
 ///
 /// assert_eq!(result, vec![3.5, 6.5]);
 /// ```
-pub fn get_quantile_breaks<T: ToPrimitive>(num_bins: usize, data: &Vec<T>) -> Vec<f64> {
+pub fn get_quantile_breaks<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Vec<f64> {
     let data = to_vec_f64(data);
 
     if num_bins == 0 || num_bins == 1 {
