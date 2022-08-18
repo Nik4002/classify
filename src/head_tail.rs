@@ -6,7 +6,7 @@ use num_traits::ToPrimitive;
 ///
 /// # Arguments
 ///
-/// * `data` - A reference to a vector of unsorted data points to generate a Classification for
+/// * `data` - A reference to a collection of unsorted data points to generate a Classification for
 ///
 /// # Edge Cases
 ///
@@ -39,7 +39,7 @@ pub fn get_head_tail_classification<T: ToPrimitive>(data: &[T]) -> Classificatio
 ///
 /// # Arguments
 ///
-/// * `data` - A reference to a vector of unsorted data points to generate breaks for
+/// * `data` - A reference to a collection of unsorted data points to generate breaks for
 ///
 /// # Edge Cases
 ///

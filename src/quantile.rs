@@ -7,7 +7,7 @@ use num_traits::ToPrimitive;
 /// # Arguments
 ///
 /// * `num_bins` - An integer (usize) representing the desired number of bins
-/// * `data` - A reference to a vector of unsorted data points to generate a Classification for
+/// * `data` - A reference to a collection of unsorted data points to generate a Classification for
 ///
 /// # Edge Cases
 ///
@@ -43,7 +43,7 @@ pub fn get_quantile_classification<T: ToPrimitive>(num_bins: usize, data: &[T]) 
 /// # Arguments
 ///
 /// * `num_bins` - The desired number of bins
-/// * `data` - A reference to a vector of unsorted data points to generate breaks for
+/// * `data` - A reference to a collection of unsorted data points to generate breaks for
 ///
 /// # Edge Cases
 ///

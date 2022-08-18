@@ -44,7 +44,7 @@ pub fn get_st_dev_classification<T: ToPrimitive>(bin_size: f64, data: &[T]) -> C
 /// # Arguments
 ///
 /// * `bin_size` - A float (f64) representing the proportion of a standard deviation each bin should encompass
-/// * `data` - A reference to a vector of unsorted data points (f64) to generate breaks for
+/// * `data` - A reference to a collection of unsorted data points (f64) to generate breaks for
 ///
 /// # Edge cases
 ///
@@ -96,7 +96,7 @@ pub fn get_st_dev_breaks<T: ToPrimitive>(bin_size: f64, data: &[T]) -> Vec<f64> 
 ///
 /// # Arguments
 ///
-/// * `data` - A reference to a vector containing data to calculate standard deviation for
+/// * `data` - A reference to a collection containing data to calculate standard deviation for
 pub fn calc_st_dev(data: &Vec<f64>) -> f64 {
     let mut mean: f64 = 0.0;
     for val in data {
