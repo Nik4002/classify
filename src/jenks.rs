@@ -105,7 +105,6 @@ pub fn get_jenks_breaks<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Vec<f64>
     if permutations > 10000 {
         permutations = 10000
     }
-    println!("permutations: {}", permutations);
 
     let mut pseudo_rng = StdRng::seed_from_u64(123456789);
 
@@ -124,7 +123,6 @@ pub fn get_jenks_breaks<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Vec<f64>
     for i in 0..best_breaks.len() {
         nat_breaks[i] = sorted_data[best_breaks[i]];
     }
-    println!("Breaks: {:#?}", nat_breaks);
 
     nat_breaks
 }
