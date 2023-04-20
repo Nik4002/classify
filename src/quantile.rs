@@ -78,7 +78,6 @@ pub fn get_quantile_breaks<T: ToPrimitive>(num_bins: usize, data: &[T]) -> Vec<f
         sorted_data.push(*item);
     }
     sorted_data.sort_by(|a, b| a.partial_cmp(b).unwrap());
-    println!("{:#?}", sorted_data);
 
     let true_num_bins = std::cmp::min(num_vals, num_bins);
 
